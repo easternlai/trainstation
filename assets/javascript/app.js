@@ -39,14 +39,37 @@ $("#submit-train").on("click", function (event){
     $("#first-train").val("");
     $("#train-interval").val("");
 
-    console.log(addTrain);
 });
 
 database.ref().on("child_added", function(snapshot){
     var trainName = snapshot.val().name;
     var destiation = snapshot.val().loc;
     var firstTrain = snapshot.val().first;
-    var trainInterval = snapshot.val().interval;
+    var trainInterval = parseInt(snapshot.val().interval);
+    
+
+    var currentMinute = parseInt(moment().minute());
+    var nextMinute = parseInt(trainInterval);
+    while(currentMinute > nextMinute){
+        nextMinute += trainInterval;
+    }
+    
+    var nextTrain = moment().add(nextMinute-currentMinute, 'minutes').format('hh:mm');
+
+    console.log(currentMinute);
+    console.log(nextMinute);
+    
+    var newTrow = $("<tr>").append( 
+        $("<td>").text(trainName),
+        $("<td>").text(destiation),
+        $("<td>").text(trainInterval),
+        $("<td>").text(nextTrain),
+        $("<td>").text(nextMinute - currentMinute)
+    );
+
+    
+
+    $("#train-list").append(newTrow);
 
 });
 
