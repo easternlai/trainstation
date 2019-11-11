@@ -16,6 +16,7 @@ firebase.initializeApp(firebaseConfig);
 database= firebase.database();
 
 $("#submit-train").on("click", function (event){
+    var correctFields = true;
 
     event.preventDefault();
 
@@ -31,9 +32,14 @@ $("#submit-train").on("click", function (event){
         interval: trainInterval
     }
 
-    if (str.indexOf(' ') !== -1){
-    database.ref().push(addTrain);
+
+
+    if(trainName.indexOf(' ') === -1){
+        console.log("test");
     }
+
+    // database.ref().push(addTrain);
+
 
     $("#train-name").val("");
     $("#destination").val("");
@@ -44,7 +50,7 @@ $("#submit-train").on("click", function (event){
 
 database.ref().on("child_added", function(snapshot){
 
-    console.log(snapshot)
+
     var trainName = snapshot.val().name;
     var destiation = snapshot.val().loc;
     var firstTrain = snapshot.val().first;
@@ -76,6 +82,8 @@ database.ref().on("child_added", function(snapshot){
         $("<td>").text(nextMinute - currentMinute).addClass(trainName+"-left")
     );
 
+    newTrow.addClass(trainName + "-row")
+    
     $("#train-list").append(newTrow);
 
 });
@@ -94,8 +102,12 @@ setInterval(function(){
         $("."+trainsList[i].name + "-next").text(nextTrain);
         if(nextMinute-currentMinute === 0){
             $("."+trainsList[i].name + "-left").text("Now Boarding");
+            $("."+trainsList[i].name + "-row").addClass("boarding");
+
         }else{
-            $("."+trainsList[i].name + "-left").text(nextMinute - currentMinute)
+            $("."+trainsList[i].name + "-row").removeClass("boarding");
+            $("."+trainsList[i].name + "-left").text(nextMinute - currentMinute);
+            
         }
     }
 }, 1000);

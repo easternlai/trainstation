@@ -1,0 +1,33 @@
+.jumbotron {
+    background-color: #53747b;
+    color: white;
+}
+
+.headline{
+    font-family: 'Fira Sans', sans-serif;
+}
+
+.subtag{
+    font-family: 'Lobster', cursive;
+    font-weight: 300;
+    font-size: 3em;
+    color: #C4820F;
+    padding-left: 50px;
+}
+
+form {
+    max-width: 50%;
+}
+
+#submit-train{
+    background-color: #003262;
+    color: white;
+}
+
+.row-head {
+    background-color: #C4820F;
+}
+
+.boarding {
+    background-color: yellow;
+}
